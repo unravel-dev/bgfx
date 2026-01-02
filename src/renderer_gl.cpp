@@ -4448,12 +4448,22 @@ namespace bgfx { namespace gl
 				if (copy)
 				{
 					data = _uniformBuffer.read(g_uniformTypeSize[type]*num);
+
+					if(!data)
+					{
+						return;
+					}
 				}
 				else
 				{
 					UniformHandle handle;
 					bx::memCopy(&handle, _uniformBuffer.read(sizeof(UniformHandle) ), sizeof(UniformHandle) );
 					data = (const char*)m_uniforms[handle.idx];
+
+					if(!data)
+					{
+						return;
+					}
 				}
 
 				uint32_t loc = _uniformBuffer.read();
